@@ -15,7 +15,7 @@ function WebpackArchivePlugin(options) {
 
 WebpackArchivePlugin.prototype.apply = function(compiler) {
 	const options = this.options;
-	compiler.plugin('after-emit', function(compiler, callback) {
+	compiler.plugin('done', function(compiler, callback) {
 		// Set output location
 		const output = options.output?
 			options.output:compiler.options.output.path;
