@@ -52,12 +52,16 @@ WebpackArchivePlugin.prototype.apply = function(compiler) {
 		}
 
 		// Add assets
-		for(let asset in compiler.assets) {
-			if(compiler.assets.hasOwnProperty(asset)) {
-				for(let stream of streams) {
-					stream.append(fs.createReadStream(compiler.assets[asset].existsAt), {name: asset});
+		if(options.directory) {
+			archive.directory(options.directory, options.dirRoot || false);
+		} else {
+			for(let asset in compiler.assets) {
+				if(compiler.assets.hasOwnProperty(asset)) {
+					for(let stream of streams) {
+						stream.append(fs.createReadStream(compiler.assets[asset].existsAt), {name: asset});
+					}
 				}
-			}
+			}	
 		}
 
 		// Finalize streams
