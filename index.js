@@ -53,7 +53,7 @@ WebpackArchivePlugin.prototype.apply = function(compiler) {
 
 		// Add assets
 		if(options.directory) {
-			archive.directory(options.directory, options.dirRoot || false);
+			stream.directory(options.directory, options.dirRoot || false);
 		} else {
 			for(let asset in compiler.assets) {
 				if(compiler.assets.hasOwnProperty(asset)) {
