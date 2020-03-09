@@ -37,6 +37,7 @@ WebpackArchivePlugin.prototype.apply = function(compiler) {
 			const ext = options.ext || 'zip'
 			let stream = archiver('zip');
 			stream.pipe(fs.createWriteStream(`${output}.${ext}`));
+			if(options.directory) stream.directory(options.directory, options.directoryRoot || false)
 			streams.push(stream);
 		}
 		if(tar) {
@@ -48,13 +49,12 @@ WebpackArchivePlugin.prototype.apply = function(compiler) {
 				}
 			});
 			stream.pipe(fs.createWriteStream(`${output}.${ext}`));
+			if(options.directory) stream.directory(options.directory, options.directoryRoot || false)
 			streams.push(stream);
 		}
 
 		// Add assets
-		if(options.directory) {
-			stream.directory(options.directory, options.dirRoot || false);
-		} else {
+		if(!options.directory) {
 			for(let asset in compiler.assets) {
 				if(compiler.assets.hasOwnProperty(asset)) {
 					for(let stream of streams) {
